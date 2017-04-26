@@ -15,18 +15,46 @@ class CollectStartRocketTask extends Task {
 
             await Mep.Motion.rotate(new TunedAngle(90));
             await lunar.ejectSide();
-            await Delay(1000);
+            await Delay(500);
 
             lunar.startTrack();
-            await Mep.Motion.go(new TunedPoint(-1200, 0), { speed: 70, backward: false });
+            await Mep.Motion.go(new TunedPoint(-1200, 5), { speed: 70, backward: false });
+            for(let i = 0; i < 6; i++){
+              await Delay(250);
+              if(lunar.isLastHere() == true)
+                break;
+            }
+            await Delay(300);
             lunar.stopTrack();
             await lunar.ejectSide();
-            await Delay(1000);
+
+            lunar.collect();
 
             lunar.startTrack();
-            await Mep.Motion.go(new TunedPoint(-1200, 120), { speed: 70, backward: false });
+            await Mep.Motion.go(new TunedPoint(-1200, 115), { speed: 70, backward: false });
+            for(let i = 0; i < 6; i++){
+              await Delay(250);
+              if(lunar.isLastHere() == true)
+                break;
+            }
+            await Delay(300);
+
             lunar.stopTrack();
             await lunar.ejectSide();
+
+            lunar.startTrack();
+            await Mep.Motion.go(new TunedPoint(-1200, 235), { speed: 70, backward: false });
+            for(let i = 0; i < 6; i++){
+              await Delay(250);
+              if(lunar.isLastHere() == true)
+                break;
+            }
+            await Delay(300);
+            
+            lunar.stopTrack();
+            await lunar.ejectSide();
+
+            //lunar.close();
         } catch (e) {
             Mep.Log.error(TAG, e);
         }
